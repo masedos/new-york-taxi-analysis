@@ -47,15 +47,11 @@ with dataset:
 features = st.beta_container()
 with features:
 	st.header('The description features of the dataset')
-	st.text('* VendorID: this is the explanation')
-	st.text('* tpep_pickup_datetime: this is the explanation')
-	st.markdown(
-		'VendorID tpep_pickup_datetime \
-		tpep_dropoff_datetime passenger_count trip_distance \
-		RatecodeID store_and_fwd_flag PULocationID DOLocationID \
-		payment_type fare_amount extra mta_tax tip_amount tolls_amount improvement_surcharge \
-		total_amount congestion_surcharge')
-
+	st.write("""
+		This data dictionary describes yellow taxi trip data. 
+		For a dictionary describing green taxi data, or a map of the TLC Taxi Zones, 
+		please visit http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml.
+		""")
 
 model_training = st.beta_container()
 with model_training:
@@ -68,7 +64,14 @@ with model_training:
 
 	n_estimators = select_col.selectbox('How many trees should there be?', options=[100, 200, 300, 'No limit'], index=0)
 
-	options = taxi_data.columns
+	#options = taxi_data.columns
+	population_dist = pd.DataFrame(taxi_data[['passenger_count','trip_distance','RatecodeID',
+											'store_and_fwd_flag','PULocationID','DOLocationID',
+											'payment_type','fare_amount','extra','mta_tax',
+											'tip_amount','tolls_amount','improvement_surcharge',
+											'total_amount','congestion_surcharge']])
+	options = population_dist.columns
+	
 
 	with select_col:
 	    level_radio = st.radio("Here is a list of features in my data", options)
