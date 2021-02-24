@@ -3,6 +3,7 @@
 # Importing libraries
 import streamlit as st
 import pandas as pd
+from math import sqrt
 
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
@@ -37,6 +38,9 @@ with dataset:
 
 	# Import dataset
 	taxi_data = get_data('data/taxi_data.csv')
+
+	st.header('Sample of the dataset')
+	st.write(taxi_data.head())
 
 	# Bar Chart
 	st.subheader('Pick-up location ID distribution on the NYC Taxi Dataset')
@@ -94,6 +98,9 @@ with model_training:
 
 	disp_col.subheader('Mean squared error of the model is:')
 	disp_col.write(mean_squared_error(y, prediction))
+
+	disp_col.subheader('Root mean squared error is:')
+	disp_col.write(sqrt(mean_squared_error(y, prediction)))
 
 	disp_col.subheader('R squared score of the model is:')
 	disp_col.write(r2_score(y, prediction))
